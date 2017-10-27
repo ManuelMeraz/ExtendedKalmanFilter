@@ -28,8 +28,8 @@ data(1,2) = mu(2,1);
 
 for i = 1:size(inputs)
 
-    u = inputs(i,:).'
-    z = sensorReadings(i, :).'
+    u = inputs(i,:).';
+    z = sensorReadings(i, :).';
 
     % Prediction
     time = i * dt
@@ -48,6 +48,7 @@ for i = 1:size(inputs)
     scatter(data(1:i,1), data(1:i,2),1,'b');
     hold on;
 
+    % Plot elipsoid on top of point
     elipsoidMatrix = sigmaNaught(1:2,1:2);
     error_elipse(elipsoidMatrix, mu(1:2));
     drawnow;
@@ -71,7 +72,7 @@ sporadicData(1,2) = mu(2,1);
 sporadicCounter = 1;
 for i = 1:size(inputs)
 
-    u = inputs(i,:).'
+    u = inputs(i,:).';
 
     % Prediction
     muBar = motionModel(mu, u, dt);
@@ -82,19 +83,25 @@ for i = 1:size(inputs)
     % Correction
     time = i * dt
     if time == sporadicSensorReadings(sporadicCounter,1)
-        z = sporadicSensorReadings(sporadicCounter,2:4).'
+
+        z = sporadicSensorReadings(sporadicCounter,2:4).';
         [K, H] = computeKalmanGain(muBar, sigmaBar, landmarks);
+
         mu = correction(muBar, K, z, landmarks)
         sigmaNaught = correctSigma(K, H, sigmaBar)
+
         sporadicCounter = sporadicCounter + 1;
+
     end
 
     sporadicData(i,1) = mu(1,1);
     sporadicData(i,2) = mu(2,1);
 
+    % Plot Settings
     scatter(sporadicData(1:i,1), sporadicData(1:i,2),1,'b');
     hold on;
 
+    % Elipsoid Plot
     elipsoidMatrix = sigmaNaught(1:2,1:2);
     error_elipse(elipsoidMatrix, mu(1:2));
     drawnow;
