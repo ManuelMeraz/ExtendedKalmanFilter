@@ -15,8 +15,6 @@ file = fopen('sporadic_sensor_readings.txt');
 sporadicSensorReadings = cell2mat(textscan(file, '%f %f %f %f'));
 fclose(file);
 
-handle = figure('Position', [0.1, 0.1, 1000, 700]);
-
 % Part 1
 mu = [0; 0; 0];
 u = [5; 0];
@@ -27,8 +25,8 @@ landmarks = [5, 5;  4, 7; -3, 2];
 data(1,1) = mu(1,1);
 data(1,2) = mu(2,1);
 
-for i = 1:size(inputs)
 
+for i = 1:size(inputs)
 
     u = inputs(i,:).'
     z = sensorReadings(i, :).'
@@ -45,6 +43,10 @@ for i = 1:size(inputs)
     data(i,1) = mu(1,1);
     data(i,2) = mu(2,1);
     sigmaNaught = correctSigma(K, H, sigmaBar)
+
+    h = scatter(data(:,1), data(:,2));
+    set (h,'XData', data(:,1), 'YData', data(:,2)); 
+    pause(0.2);
 
 end
 
@@ -75,18 +77,18 @@ for i = 1:size(inputs)
         [K, H] = computeKalmanGain(muBar, sigmaBar, landmarks);
         mu = correction(muBar, K, z, landmarks)
         sigmaNaught = correctSigma(K, H, sigmaBar)
-        sporadicCounter++;
+        sporadicCounter = sporadicCounter + 1;
     end
 
     sporadicData(i,1) = mu(1,1);
     sporadicData(i,2) = mu(2,1);
 
+    scatter(sporadicData(:,1), sporadicData(:,2))
+    pause(0.2);
+
 end
 
 
-%scatter(data(:,1), data(:,2))
-%pause();
 
-
-%scatter(sporadicData(:,1), sporadicData(:,2))
-%pause();
+%sigmatest = eye(2,2) * 0.001;
+%error_elipse(sigmatest);

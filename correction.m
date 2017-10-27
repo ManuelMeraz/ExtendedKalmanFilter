@@ -3,9 +3,7 @@ function mu = correction(muBar, K, z, landmarks)
         h(i,1) = distance(muBar, landmarks(i,:).');
     end
 
-    ' inside correction'
-    mu = muBar + K * (z - h)
-    ' inside correction'
+    mu = muBar + K * (z - h);
 end
 
 function d = distance(p1, p2) 
