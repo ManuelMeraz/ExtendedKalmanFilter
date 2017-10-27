@@ -57,6 +57,7 @@ for i = 1:size(inputs)
 
 end
 
+pause()
 clf
 
 % Part 2
