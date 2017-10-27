@@ -17,7 +17,6 @@ fclose(file);
 
 % Part 1
 mu = [0; 0; 0];
-u = [5; 0];
 dt = 0.5;
 sigmaNaught = eye(3,3) * 0.001;
 landmarks = [5, 5;  4, 7; -3, 2];
@@ -39,10 +38,10 @@ for i = 1:size(inputs)
     % Correction
     [K, H] = computeKalmanGain(muBar, sigmaBar, landmarks);
     mu = correction(muBar, K, z, landmarks)
+    sigmaNaught = correctSigma(K, H, sigmaBar)
 
     data(i,1) = mu(1,1);
     data(i,2) = mu(2,1);
-    sigmaNaught = correctSigma(K, H, sigmaBar)
 
     % Plot Settings
     scatter(data(1:i,1), data(1:i,2),1,'b');
@@ -53,8 +52,6 @@ for i = 1:size(inputs)
     error_elipse(ellipsoidMatrix, mu(1:2));
     drawnow;
     pause(0.2);
-    
-
 
 end
 
@@ -63,7 +60,6 @@ clf
 
 % Part 2
 mu = [0; 0; 0]
-u = [5; 0];
 sigmaNaught = eye(3,3) * 0.001
 
 sporadicData(1,1) = mu(1,1);
