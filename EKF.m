@@ -44,12 +44,20 @@ for i = 1:size(inputs)
     data(i,2) = mu(2,1);
     sigmaNaught = correctSigma(K, H, sigmaBar)
 
-    h = scatter(data(:,1), data(:,2));
-    set (h,'XData', data(:,1), 'YData', data(:,2)); 
+    % Plot Settings
+    scatter(data(1:i,1), data(1:i,2),1,'b');
+    hold on;
+
+    elipsoidMatrix = sigmaNaught(1:2,1:2);
+    error_elipse(elipsoidMatrix, mu(1:2));
+    drawnow;
     pause(0.2);
+    
+
 
 end
 
+clf
 
 % Part 2
 mu = [0; 0; 0]
@@ -83,12 +91,12 @@ for i = 1:size(inputs)
     sporadicData(i,1) = mu(1,1);
     sporadicData(i,2) = mu(2,1);
 
-    scatter(sporadicData(:,1), sporadicData(:,2))
+    scatter(sporadicData(1:i,1), sporadicData(1:i,2),1,'b');
+    hold on;
+
+    elipsoidMatrix = sigmaNaught(1:2,1:2);
+    error_elipse(elipsoidMatrix, mu(1:2));
+    drawnow;
     pause(0.2);
 
 end
-
-
-
-%sigmatest = eye(2,2) * 0.001;
-%error_elipse(sigmatest);
