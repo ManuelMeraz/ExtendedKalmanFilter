@@ -48,9 +48,9 @@ for i = 1:size(inputs)
     scatter(data(1:i,1), data(1:i,2),1,'b');
     hold on;
 
-    % Plot elipsoid on top of point
-    elipsoidMatrix = sigmaNaught(1:2,1:2);
-    error_elipse(elipsoidMatrix, mu(1:2));
+    % Plot ellipsoid on top of point
+    ellipsoidMatrix = sigmaNaught(1:2,1:2);
+    error_elipse(ellipsoidMatrix, mu(1:2));
     drawnow;
     pause(0.2);
     
@@ -102,8 +102,8 @@ for i = 1:size(inputs)
     hold on;
 
     % Elipsoid Plot
-    elipsoidMatrix = sigmaNaught(1:2,1:2);
-    error_elipse(elipsoidMatrix, mu(1:2));
+    ellipsoidMatrix = sigmaNaught(1:2,1:2);
+    error_elipse(ellipsoidMatrix, mu(1:2));
     drawnow;
     pause(0.2);
 
