@@ -20,6 +20,11 @@ file = fopen('sporadic_sensor_readings.txt');
 sporadicSensorReadings = cell2mat(textscan(file, '%f %f %f'));
 fclose(file);
 
+handle = figure('Position', [0.1, 0.1, 1000, 700]);
+
+data(1,1) = mu(1,1);
+data(1,2) = mu(2,1);
+
 for i = 1:size(inputs)
 
     u = inputs(i,:).'
@@ -32,7 +37,12 @@ for i = 1:size(inputs)
     % Correction
     [K, H] = computeKalmanGain(muBar, sigmaBar, landmarks);
     mu = correction(muBar, K, z, landmarks)
+    data(i,1) = mu(1,1);
+    data(i,2) = mu(2,1);
     sigmaNaught = correctSigma(K, H, sigmaBar)
 
 end
 
+%plot(data)
+scatter(data(:,1), data(:,2))
+pause();
